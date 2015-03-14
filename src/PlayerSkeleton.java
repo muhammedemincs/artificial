@@ -7,6 +7,12 @@ public class PlayerSkeleton {
 		for(int i=0; i<legalMoves.length; i++){
 			int score = 0;
 			g.reset(s, legalMoves[i]);
+			//ignore this move if game over
+			//TODO: Fix this for the case when all moves are game over
+			//since in this iteration it would always pick the first move in
+			//that scenario
+			if(g.hasLost())
+				continue;
 			score += -1*g.getTotalHeight(); //Minimize total height
 			score += -1*g.getMaxHeight(); //Minimize max height
 			if(score >= totalScore){
@@ -97,6 +103,10 @@ public class PlayerSkeleton {
 				result = Math.max(result, top[i]);
 			}
 			return result;
+		}
+		//This function tells if the last moved resulted in Game Over
+		public boolean hasLost(){
+			return lost;
 		}
 		//This function is identical to the one in State for all practical purposes
 		public boolean makeMove(int orient, int slot){
