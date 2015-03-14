@@ -8,6 +8,7 @@ public class PlayerSkeleton {
 			int score = 0;
 			g.reset(s, legalMoves[i]);
 			score += -1*g.getTotalHeight(); //Minimize total height
+			score += -1*g.getMaxHeight(); //Minimize max height
 			if(score >= totalScore){
 				totalScore = score;
 				bestMove = i;
@@ -85,6 +86,15 @@ public class PlayerSkeleton {
 			int result = 0;
 			for(int i=0;i<top.length;i++){
 				result += top[i];
+			}
+			return result;
+		}
+
+		//Returns the maximum column height out of all columns
+		public int getMaxHeight(){
+			int result = -1;
+			for(int i=0;i<top.length;i++){
+				result = Math.max(result, top[i]);
 			}
 			return result;
 		}
