@@ -14,7 +14,6 @@ public class PlayerSkeleton {
 		for(int i=0; i<legalMoves.length; i++){
 			int score = 0;
 			g.reset(s, legalMoves[i]);
-			//ignore this move if game over
 			score += -1*g.getTotalHeight(); //Minimize total height
 			score += -1*g.getMaxHeight(); //Minimize max height
 			if(score >= totalScore && !g.hasLost()){
