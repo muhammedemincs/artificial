@@ -1,26 +1,35 @@
 public class PlayerSkeleton {
+	private static final int INF = 99999999;
 	private GhostState g;
 	// implement this function to have a working system
 	public int pickMove(State s, int[][] legalMoves) {
-		int totalScore = -99999999;
+		// The reason for two sets of total scores is to keep track of endgame
+		// moves. totalScore will keep track of moves that does not end in game
+		// over while totalBadScore will keep track of the best move among failing
+		// moves. If all moves are failing, totalBadScore will be used to judge.
+		int totalScore = -INF;
 		int bestMove = 0;
+		int totalBadScore = -INF;
+		int bestBadMove = 0;
 		for(int i=0; i<legalMoves.length; i++){
 			int score = 0;
 			g.reset(s, legalMoves[i]);
 			//ignore this move if game over
-			//TODO: Fix this for the case when all moves are game over
-			//since in this iteration it would always pick the first move in
-			//that scenario
-			if(g.hasLost())
-				continue;
 			score += -1*g.getTotalHeight(); //Minimize total height
 			score += -1*g.getMaxHeight(); //Minimize max height
-			if(score >= totalScore){
+			if(score >= totalScore && !g.hasLost()){
 				totalScore = score;
 				bestMove = i;
+			}else if(score >= totalBadScore && g.hasLost()){
+				totalBadScore = score;
+				bestBadMove = i;
 			}
 		}
-		return bestMove;
+		if(totalScore == -INF){
+			return bestBadMove;
+		}else{
+			return bestMove;
+		}
 	}
 
 	public PlayerSkeleton(){
