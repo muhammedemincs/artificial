@@ -49,7 +49,7 @@ public class PlayerSkeleton {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("You have completed " + s.getRowsCleared()
+		System.out.println("You have completed helal kocum" + s.getRowsCleared()
 			+ " rows.");
 	}
 
